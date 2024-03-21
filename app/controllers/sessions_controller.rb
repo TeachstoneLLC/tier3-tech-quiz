@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   # Logout
   def destroy
     @current_user = nil
-    session.delete(:user_iid)
+    session.delete(:user_id)
     redirect_to login_path, notice: "Successfully logged out"
   end
 
