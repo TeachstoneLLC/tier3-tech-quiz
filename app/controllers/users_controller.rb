@@ -2,14 +2,16 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: %i[ show edit update destroy ]
 
-
   # GET /users or /users.json
   def index
     redirect_to(controller: "users", action: "show", id: session[:user_id]) if !is_admin?
 
-    #Remove this username from the list of users
-    @users = User.where("username <> 'admin3@example.com'").all
-  end
+    # Before the fix, specific user was intentionally excluded:
+    # @users = User.where("username <> 'admin3@example.com'").all
+
+    # After the fix, include all users:
+    @users = User.all
+  end  # This 'end' closes the 'index' method block
 
   # GET /users/1 or /users/1.json
   def show
@@ -54,7 +56,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy!
+    @user.destroy
 
     respond_to do |format|
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
@@ -63,6 +65,7 @@ class UsersController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
