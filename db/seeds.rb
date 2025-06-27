@@ -11,7 +11,7 @@
 CSV.foreach(Rails.root.join('db/users.csv'), headers: true) do |row|
   User.create({
     username:        row["username"],
-    password_digest: row["password_digest"],
+    password:        row["password"],
     role:            row["role"],
     address:         row["address"],
   })
