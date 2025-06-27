@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     redirect_to(controller: "users", action: "show", id: session[:user_id]) if !is_admin?
 
     #Remove this username from the list of users
-    @users = User.where("username <> 'admin3@example.com'").all
+    @users = User.all
   end
 
   # GET /users/1 or /users/1.json
